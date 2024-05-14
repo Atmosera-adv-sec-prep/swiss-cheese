@@ -3,3 +3,26 @@ requests==2.25.1
 datetime==4.3
 pysqlite3==0.4.6
 Werkzeug==2.2.2
+
+# #### AGPL ####
+# https://github.com/tesla-ce/python-client/blob/main/LICENSE
+tesla-ce-client>=0.1.0
+# https://github.com/yuvallanger/meditate/blob/master/LICENSE.txt
+meditate>=0.0.4
+
+# The following are python libraries with security vulnerabilities in them
+# for testing testing SAST tools like GHAS, Dependabot, Trivy, Snyk, bandit, etc
+# - alerts on unverified requests e.g., `requests.get(url, verify=False)`
+requests~=2.31
+# - pycrypto is abandonware and very insecure
+pycrypto==2.6.0
+# - cryptography<38 has 4 known _fixable_ high severity vulns, here's 1/4:
+# - https://security.snyk.io/vuln/SNYK-PYTHON-CRYPTOGRAPHY-3112177
+cryptography<38
+# - flask-caching==1.11.1 has 1 PoC (unfixable) high severity vuln:
+# - https://security.snyk.io/vuln/SNYK-PYTHON-FLASKCACHING-1292339
+flask-caching==1.11.1
+# from GHSA database
+gevent==23.7
+paramiko==2.0.0
+langchain==0.0.170
