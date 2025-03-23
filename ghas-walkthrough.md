@@ -1,38 +1,12 @@
 # GHAS Walkthrough
 
 This repository leverages GitHub Advanced Security (GHAS) to demonstrate it's core functionality and features.
-Consider the sections below as a simple lab walkthrough of the various features of GHAS, how to find them, and how to enable them.
 
-Items with a green check (✅) are the specific learning objectives for this walkthrough. If you are comfortable with all these items, you should have a good understanding of how to work with GHAS in an effective manner.
-
-> If you haven't run secrets scanning, CodeQL or other SAST tools on your code base, it's highly likely you will get a flood of alerts. While this is normal, its crucial your organization has a plan to address existing technical debt before enabling security scanning features at scale.
-
-## Table of Contents
-
-- [Setting up GHAS on this repository](#setting-up-ghas-on-this-repository)
-- [Secrets Scanning](#secrets-scanning)
-    - [Secrets Push Protection](#secrets-push-protection)
-    - [Custom Secret Patterns](#custom-secret-patterns)
-- [Code Scanning with CodeQL](#code-scanning-with-codeql)
-- [Triage Code Scanning Alerts](#triage-code-scanning-alerts)
-- [Dependabot](#dependabot)
-    - [Enabling Dependabot](#enabling-dependabot)
-    - [Enabling Dependabot Version Updates](#enabling-dependabot-version-updates)
-- [Third Party Code Scanning](#third-party-code-scanning)
-    - [Trivy IaC Scanning](#trivy-iac-scanning)
-    - [Dependency Review (by GitHub)](#dependency-review-by-github)
-- [Re-usable Workflows](#re-usable-workflows)
-- [Security Overview (Reporting)](#security-overview-reporting)
-- [Security Manager Role](#security-manager-role)
+Items with a green check (✅) are the specific learning objectives for students. If you are comfortable with all these items, you should have a good understanding of how to work with GHAS in an effective manner.
 
 # Setting up GHAS on this repository
 
 In order to run through the features, simply fork this repository and enable the features you want to test. For quick testing you can fork this on your personal account and keep the visibility public. Most GHAS features are free for public repositories.
-
-> All subsequent sections assume you have following these steps:
-
-1. Fork the repository. 
-2. In your fork, go to **Settings** > **Code Security & analysis** and enable _all_ the security features.
 
 **References**:
 
@@ -40,8 +14,8 @@ In order to run through the features, simply fork this repository and enable the
 * [Quick start for securing your repository](https://docs.github.com/en/enterprise-cloud@latest/code-security/getting-started/quickstart-for-securing-your-repository)
 * [Managing security an analysis settings for your organization](https://docs.github.com/en/enterprise-cloud@latest/organizations/keeping-your-organization-secure/managing-security-settings-for-your-organization/managing-security-and-analysis-settings-for-your-organization)
 
-- ✅ Walkthrough repository level GHAS settings.
-- ✅ Walkthrough organization level GHAS settings.
+- ✅ Review repository level GHAS settings.
+- ✅ Review organization level GHAS settings.
 
 # Secrets Scanning
 
@@ -53,7 +27,7 @@ There's another feature in beta called [Generic Secrets Detection](https://docs.
 
 Look for Active secrets first. When prioritizing found secrets, use the **Validity** filter set to **Active** to show secrets that are know to be valid.
 
-You can [exclude directories from secret scanning for users](https://docs.github.com/en/enterprise-cloud@latest/code-security/secret-scanning/configuring-secret-scanning-for-your-repositories) by creating a [`.github/secret-scanning.yml`](./.github/secret_scanning.yml) file in the repository. 
+You can exclude directories from secret scanning for users by creating a [`.github/secret-scanning.yml`](./.github/secret_scanning.yml) file in the repository. 
 
 - ✅ Review existing secret alerts. Find alerts that have a validity of Active.
 - ✅ Review the supported secret providers and the partner checking for secrets.
@@ -155,29 +129,11 @@ See also [About dependabot version updates](https://docs.github.com/en/code-secu
 
 > NOTE: The reported licenses are only as good as the package repositories are that report this. It very common for licenses to be misreported or not reported at all.
 
-- ✅ Walkthrough the Insights > Dependency Graph for this repository. Do you understand the difference between the Dependencies, Dependents and Dependabot views?
+- ✅ Review the Insights > Dependency Graph for this repository. Do you understand the difference between the Dependencies, Dependents and Dependabot views?
 
 # Third Party Code Scanning
 
 The [GitHub marketplace](https://github.com/marketplace) has thousands of third-party actions that can be explored to augment your development and security workflows. You can [filter on the security category](https://github.com/marketplace?category=security&copilot_app=false&query=&type=&verification=) to explore tools that you might already be using that you can integrate into your existing workflow.
-
-The following sections are tools that I've found useful and are demoed as part of this repository.
-
-- ✅ Review the [GitHub Marketplace](https://github.com/marketplace).
-
-## Trivy IaC Scanning
-
-An example of scanning Terraform is provided in the [trivy-config.yml](./.github/workflows/trivy-config.yml) file. This workflow will scan the Terraform code in the repository for vulnerabilities.
-
-The [Trivy Action](https://github.com/aquasecurity/trivy-action) can be configured to scan IaC files as well as Docker images for OS-level library vulnerabilities.
-
-- ✅ Review the [trivy-config.yml](./.github/workflows/trivy-config.yml) file.
-- ✅ Create a branch and modify [main.tf](./iac-misconfiguration/main.tf) to review the alerts generated by Trivy in a PR.
-- ✅ Review existing alerts in the Security tab for the repository.
-
-## Container Scanning
-
-> This is not currently covered. But it's important to know that Dependabot does not support scanning of OS-level dependencies. For that you will need to scan the container image itself during the build process, the container registry, and/or the live container in production.
 
 ## Dependency Review (by GitHub)
 
